@@ -21,15 +21,13 @@ public class NguyenLieuDAO extends BaseDAO {
 	}
 	
 	public void addNguyenLieu(NguyenLieu ad) {
-		
-		
 		String tenNL = ad.getTenNL();
 		int gia = ad.getGia();
 		double soLuong  = ad.getSoLuong();
 		String ngayNhapDate = ad.getNgayNhap().toString();
 		 
 		try {
-			CallableStatement stat = conn.prepareCall("{call nguyen_lieu_add(? ,? , ? , ? )");
+			CallableStatement stat = conn.prepareCall("{call nguyen_lieu_add(? ,? , ? , ? )}");
 			stat.setString(1, tenNL);
 			stat.setInt(2, gia);
 			stat.setDouble(3, soLuong);
@@ -39,7 +37,6 @@ public class NguyenLieuDAO extends BaseDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		 
 	}
 	public void updateNguyenLieu(NguyenLieu up) {
 		 int p_id = up.getId();
@@ -49,7 +46,7 @@ public class NguyenLieuDAO extends BaseDAO {
 		 String p_ngayNhapDate = up.getNgayNhap().toString();
 			 
 		 try {
-			 CallableStatement stat= conn.prepareCall("{call nguyen_lieu_update(?, ? ,? , ? ,? )");
+			 CallableStatement stat= conn.prepareCall("{call nguyen_lieu_update(?, ? ,? , ? ,? )}");
 			 stat.setInt(1, p_id);
 			 stat.setString(2, p_tenNL);
 			 stat.setInt(3, p_gia);
@@ -63,13 +60,10 @@ public class NguyenLieuDAO extends BaseDAO {
 	}
 	public String deleteNguyenLieu(int p_id) {
 		 try {
-			 CallableStatement stat= conn.prepareCall("{call nguyen_lieu_delete(?)");
+			 CallableStatement stat= conn.prepareCall("{call nguyen_lieu_delete(?)}");
 			 stat.setInt(1, p_id);
-			 if(stat.executeUpdate()>0) {
-				 
-				  
+			 if(stat.executeUpdate()>0) {  
 				    return "Delete is sucess";
-				 
 			 }
 			 return " Delete is failed";
 			
@@ -78,11 +72,10 @@ public class NguyenLieuDAO extends BaseDAO {
 			e.printStackTrace();
 		 }
 		 return null;
-		
 	}
 	public void getAllNguyenLieu(JTable tb) {
 		 try {
-			 CallableStatement stat = conn.prepareCall("{call nguyen_lieu_getAll()");
+			 CallableStatement stat = conn.prepareCall("{call nguyen_lieu_all()}");
 			 ResultSet result = stat.executeQuery();
 			 DefaultTableModel tbModel = (DefaultTableModel)tb.getModel();
 			 if(result.next()) {

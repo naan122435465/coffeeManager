@@ -25,7 +25,7 @@ public class UserNameDAO extends BaseDAO{
 		 int role = user.getRole();
 		 CallableStatement stat;
 		try {
-			stat = conn.prepareCall("{call username_add(? ,? ,? ,?)");
+			stat = conn.prepareCall("{call 	user_add(? ,? ,? ,?)}");
 			stat.setString(1, username);
 			stat.setString(2, password);
 			stat.setInt(3, idNV);
@@ -44,7 +44,7 @@ public class UserNameDAO extends BaseDAO{
 		 int p_idNV = user.getIdNV();
 		 int role = user.getRole();
 		 try {
-			 CallableStatement stat= conn.prepareCall("{call username_update(?, ? ,? ,? ,?)");
+			 CallableStatement stat= conn.prepareCall("{call user_update(?, ? ,? ,? ,?)}");
 			 stat.setInt(1, p_id);
 			 stat.setString(2, p_username);
 			 stat.setString(3, p_password);
@@ -58,7 +58,7 @@ public class UserNameDAO extends BaseDAO{
 	}
 	public String deleteUser(int p_id) {
 		 try {
-			 CallableStatement stat= conn.prepareCall("{call username_delete(?)");
+			 CallableStatement stat= conn.prepareCall("{call user_delete(?)}");
 			 stat.setInt(1, p_id);
 			 if(stat.executeUpdate()>0) {
 				 
@@ -78,7 +78,7 @@ public class UserNameDAO extends BaseDAO{
 	public void getAllUser(JTable tb) {
 		 try {
 			
-			 CallableStatement stat = conn.prepareCall("{call username_getAll()");
+			 CallableStatement stat = conn.prepareCall("{call	user_all()}");
 			 ResultSet result = stat.executeQuery();
 			 DefaultTableModel tbModel = (DefaultTableModel)tb.getModel();
 			 if(result.next()) {
@@ -95,6 +95,47 @@ public class UserNameDAO extends BaseDAO{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+	}
+	
+	public int getUserRole(String user_name1 , String pass1) 
+	{
+		int id = 0;
+		try {
+			
+			String user_name = user_name1;
+			String pass = pass1;
+			CallableStatement stat = conn.prepareCall("{call	login(?,? )}");
+			stat.setString(1, user_name);
+			stat.setString(2, pass);
+			ResultSet result = stat.executeQuery();
+			result.next();
+			 id= result.getInt(1);
+				
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return id;
+	}
+	public UserName getUserID(int p_id) throws SQLException {
+		
+			
+			 CallableStatement stat = conn.prepareCall("{call	users_getById(?)}");
+			 stat.setInt(1, p_id);
+			 ResultSet result = stat.executeQuery();	 
+			 result.next();	
+			int id = result.getInt(1);
+			String username = result.getString(2);
+			String password = result.getString(3);
+			int idNV =result.getInt(4);
+			int role = result.getInt(5);
+			UserName user	= new UserName(id, username, password, idNV, role)	;
+			return user;
+		
 		
 	}
 	

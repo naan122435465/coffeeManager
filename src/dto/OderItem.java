@@ -4,9 +4,17 @@ public class OderItem {
 
 	private int id;
 	private int idOder;
-	private int tenMon;
+	private String tenMon;
 	private int soLuong;
 	private double discount;
+	private int tong;
+	public OderItem(int id_order, String ten_mon, int so_luong, int discount2) {
+		// TODO Auto-generated constructor stub
+		this.tenMon = ten_mon;
+		this.soLuong = so_luong;
+		this.discount = discount2;
+		this.idOder = id_order;
+	}
 	public int getId() {
 		return id;
 	}
@@ -20,10 +28,10 @@ public class OderItem {
 		this.idOder = idOder;
 	}
 	
-	public int getTenMon() {
+	public String getTenMon() {
 		return tenMon;
 	}
-	public void setTenMon(int tenMon) {
+	public void setTenMon(String tenMon) {
 		this.tenMon = tenMon;
 	}
 	public int getSoLuong() {
@@ -37,5 +45,11 @@ public class OderItem {
 	}
 	public void setDiscount(double discount) {
 		this.discount = discount;
+	}
+	public int getTong() {
+		return tong;
+	}
+	public void setTong(int tong) {
+		this.tong = tong;
 	}
 }

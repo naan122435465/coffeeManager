@@ -6,6 +6,11 @@ public class Oders {
 	private int id;
 	private int idNV;
 	private LocalDate ngayOrder;
+	public Oders(int idNV2, LocalDate ngay_or) {
+		this.idNV = idNV2;
+		this.ngayOrder = ngay_or;
+		// TODO Auto-generated constructor stub
+	}
 	public int getId() {
 		return id;
 	}
