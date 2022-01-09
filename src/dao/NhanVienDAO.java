@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -96,5 +97,22 @@ public class NhanVienDAO extends BaseDAO {
 			e.printStackTrace();
 		}
 	
+	}
+	public void gettenNV(JComboBox tenmon) {
+		 try {
+			 CallableStatement stat = conn.prepareCall("{call nhan_vien_tenall}");
+			 ResultSet result = stat.executeQuery();
+			 if(result.next()) {
+				 do {
+					 String ten = result.getString(1);
+					 
+					tenmon.addItem(ten);
+				 }while(result.next());
+			 }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 }

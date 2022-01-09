@@ -2,6 +2,7 @@ package gui;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
 import com.mysql.cj.x.protobuf.MysqlxCrud.Order;
@@ -16,6 +17,8 @@ import dto.UserName;
 import utilities.CoffeeDataSource;
 
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.JComboBox;
 import java.awt.Font;
 import javax.swing.JTextPane;
@@ -52,18 +55,16 @@ public class GUI_Order extends JPanel {
 	private OderItemDAO order_item_dao;
 	private JTextField tf_GiamGia;
 	private JTextField tf_SoLuong;
-	private JTextField tf_TenMon;
-	private JTextField tf_SL;
-	private JTextField tf_ThanhTien;
 	int id_orderItem;
 	private JTable table_Order;
+	int tongbill;
 	public GUI_Order(UserName user) throws ClassNotFoundException, IOException, SQLException {
 		CoffeeDataSource.init("database.properties");
 	    Connection conn = CoffeeDataSource.getConnection();
 	    order_dao = new OdersDAO(conn);
 	    menu_dao = new MenuDAO(conn);
 	    order_item_dao = new OderItemDAO(conn);
-	   
+	    tongbill = 0;
 		setLayout(null);
 		
 		//JPanel panel = new JPanel();
@@ -165,76 +166,30 @@ public class GUI_Order extends JPanel {
 		panel_1_1.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(393, 10, 466, 241);
+		scrollPane.setPreferredSize(new Dimension(380,280));
+		scrollPane.setBounds(313, 7, 466, 212);
 		panel_1_1.add(scrollPane);
 		
 		table_Order = new JTable();
+		table_Order.setAutoCreateRowSorter(true);
 		table_Order.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
-				"T\u00EAn m\u00F3n", "Discount", "SL", "Th\u00E0nh ti\u1EC1n"
+				"T\u00EAn M\u00F3n", "Discount", "SL", "Th\u00E0nh Ti\u1EC1n"
 			}
 		) {
 			Class[] columnTypes = new Class[] {
-				String.class, Integer.class, Integer.class, Integer.class
+				Object.class, Object.class, Object.class, Integer.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
-			boolean[] columnEditables = new boolean[] {
-				false, false, false, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
 		});
-		table_Order.getColumnModel().getColumn(0).setPreferredWidth(110);
-		table_Order.getColumnModel().getColumn(1).setPreferredWidth(51);
-		table_Order.getColumnModel().getColumn(2).setPreferredWidth(21);
-		table_Order.getColumnModel().getColumn(3).setPreferredWidth(80);
 		scrollPane.setViewportView(table_Order);
 		
-		JPanel panel_3 = new JPanel();
-		panel_3.setBounds(-1, 47, 384, 45);
-		panel_3.setLayout(null);
-		panel_1_1.add(panel_3);
-		
-		JLabel lblTenMon = new JLabel("T\u00EAn m\u00F3n");
-		lblTenMon.setHorizontalAlignment(SwingConstants.LEFT);
-		lblTenMon.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblTenMon.setBounds(6, 0, 178, 21);
-		panel_3.add(lblTenMon);
-		
-		JLabel lblSL = new JLabel("SL");
-		lblSL.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSL.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblSL.setBounds(186, 0, 30, 21);
-		panel_3.add(lblSL);
-		
-		JLabel lblThanhTien = new JLabel("Th\u00E0nh ti\u1EC1n");
-		lblThanhTien.setHorizontalAlignment(SwingConstants.LEFT);
-		lblThanhTien.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblThanhTien.setBounds(226, 0, 158, 21);
-		panel_3.add(lblThanhTien);
-		
-		tf_TenMon = new JTextField();
-		tf_TenMon.setColumns(10);
-		tf_TenMon.setBounds(3, 22, 181, 20);
-		panel_3.add(tf_TenMon);
-		
-		tf_SL = new JTextField();
-		tf_SL.setColumns(10);
-		tf_SL.setBounds(186, 22, 30, 20);
-		panel_3.add(tf_SL);
-		
-		tf_ThanhTien = new JTextField();
-		tf_ThanhTien.setColumns(10);
-		tf_ThanhTien.setBounds(218, 22, 166, 20);
-		panel_3.add(tf_ThanhTien);
-		
 		JPanel panel_2_1 = new JPanel();
-		panel_2_1.setBounds(0, 0, 384, 42);
+		panel_2_1.setBounds(0, 0, 282, 42);
 		panel_2_1.setLayout(null);
 		panel_2_1.setBackground(SystemColor.activeCaption);
 		panel_1_1.add(panel_2_1);
@@ -243,27 +198,36 @@ public class GUI_Order extends JPanel {
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblNewLabel_1.setBackground(Color.WHITE);
-		lblNewLabel_1.setBounds(0, 0, 384, 42);
+		lblNewLabel_1.setBounds(0, 0, 314, 42);
 		panel_2_1.add(lblNewLabel_1);
 		
-		JButton btnSua = new JButton("S\u1EEDa");
-		btnSua.setBounds(99, 103, 89, 23);
-		btnSua.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		panel_1_1.add(btnSua);
-		
 		JButton btnXoa = new JButton("X\u00F3a");
-		btnXoa.setBounds(202, 103, 89, 23);
+		btnXoa.setBounds(784, 19, 69, 23);
 		panel_1_1.add(btnXoa);
 		
 		JButton btn_thanhToan = new JButton("Thanh to\u00E1n");
-		btn_thanhToan.setBounds(134, 155, 132, 33);
+		btn_thanhToan.setBounds(93, 104, 132, 33);
 		btn_thanhToan.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btn_thanhToan.setForeground(new Color(205, 133, 63));
 		panel_1_1.add(btn_thanhToan);
-		 DefaultTableModel tbModel = (DefaultTableModel)table_Order.getModel();
+		
+		JLabel lblNewLabel_2 = new JLabel("Tổng đơn: ");
+		lblNewLabel_2.setBounds(635, 229, 72, 23);
+		panel_1_1.add(lblNewLabel_2);
+		
+		JLabel lb_tong_don = new JLabel();
+		lb_tong_don.setBounds(717, 229, 72, 23);
+		panel_1_1.add(lb_tong_don);
+		
+		JButton btn_huy = new JButton("Huỷ Đơn");
+		btn_huy.setForeground(new Color(255, 51, 102));
+		btn_huy.setFont(new Font("Tahoma", Font.BOLD, 15));
+		
+		btn_huy.setBounds(99, 160, 126, 33);
+		panel_1_1.add(btn_huy);
+		
+		DefaultTableModel tbModel = (DefaultTableModel)table_Order.getModel();
+		
 		bnt_add.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String ten_mon = (String) comboBox_TenMon.getSelectedItem();
@@ -271,19 +235,12 @@ public class GUI_Order extends JPanel {
 				int  discount = Integer.parseInt(tf_GiamGia.getText());
 				int gia = menu_dao.getGia(ten_mon);
 				int tong = gia*(100-discount);
+				tongbill = tong + tongbill;
+				
 			//	OderItem order_item = new OderItem(id_order, ten_mon, so_luong, discount);
 				tbModel.addRow(new Object[] {ten_mon,discount,so_luong ,tong });
 				scrollPane.setViewportView(table_Order);
-			}
-		});
-		btnXoa.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				int r = table.getSelectedRow();
-				if (r != -1){
-				
-					
-				}
+				lb_tong_don.setText(String.valueOf(tongbill));
 			}
 		});
 		btn_thanhToan.addActionListener(new ActionListener() {
@@ -292,21 +249,48 @@ public class GUI_Order extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				 int idNV = user.getIdNV();
-					LocalDate ngay_or = LocalDate.now();
+				 LocalDate ngay_or = LocalDate.now();
 					Oders oders = new Oders(idNV, ngay_or);
 					int id_order = order_dao.addOder(oders);
-					for(int i = 1; i <= table_Order.getRowCount(); i++) {
-						
-						String ten_mon =  (String) table.getValueAt(i, 1);
-						int so_luong  =Integer.parseInt(String.valueOf(table.getValueAt(i, 2)));
-						int discount  =Integer.parseInt(String.valueOf(table.getValueAt(i, 2)));
-						OderItem order_item = new OderItem(id_order, ten_mon, so_luong, discount);
-						
+					for(int i = 0; i < table_Order.getRowCount(); i++) {
+						String ten_mon = (String) table_Order.getValueAt(i, 0);
+						int so_luong  =Integer.parseInt(String.valueOf(table_Order.getValueAt(i, 1)));
+						int discount  =Integer.parseInt(String.valueOf(table_Order.getValueAt(i, 2)));
+						OderItem order_item = new OderItem(id_order, ten_mon, so_luong, discount);	
+						order_item_dao.addOderItem(order_item);
+						scrollPane.setViewportView(table_Order);
 					}
-				
+				JOptionPane.showMessageDialog(null,"Order Thành Công");
+				tbModel.setRowCount(0);
 				
 			}
 		});
+		btn_huy.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tbModel.setRowCount(0);
+			}
+		});
+		btnXoa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				int r = table_Order.getSelectedRow();
+				int r_model = -1;
+				if (r != -1){
+					r_model = table_Order.convertRowIndexToModel(r);
+				}
+				int c = table_Order.getSelectedColumn();
+				int c_model = -1;
+				if (c != -1){
+					c_model = table_Order.convertColumnIndexToModel(c);
+				}
+				int tongtru =  Integer.parseInt(String.valueOf(table_Order.getValueAt(r_model, 3)));
+				tongbill = tongbill - tongtru;
+				tbModel.removeRow(table_Order.getSelectedRow());
+				lb_tong_don.setText(String.valueOf(tongbill));
+			}
+		});
+	
+		
 		
 	}
 }

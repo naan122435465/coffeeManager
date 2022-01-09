@@ -89,6 +89,10 @@ public class GUI_QuanLy extends JPanel {
 		btnQLTK.setBounds(10, 119, 165, 23);
 		panel.add(btnQLTK);
 		btnQLTK.setIcon(icon_QLTaiKhoan);
+		
+		JButton btnQLDH = new JButton("Quản lý đơn hàng");
+		btnQLDH.setBounds(10, 157, 165, 23);
+		panel.add(btnQLDH);
 		curJPanel = new GUI__QuanLyTD() ;
 		//Hien thi quan ly nhan vien
 		btnQLNV.addActionListener(new ActionListener() {
@@ -174,6 +178,30 @@ public class GUI_QuanLy extends JPanel {
 				
 			}
 		});
-		
+		btnQLDH.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				btnQLDH.getParent().remove(curJPanel);
+				btnQLDH.getParent().revalidate();
+				try {
+					curJPanel = new GUI_QuanLyOrder();
+					btnQLDH.getParent().add(curJPanel);
+					btnQLDH.getParent().repaint();
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				btnQLDH.getParent().add(curJPanel);
+				btnQLDH.getParent().repaint();
+			}
+		});
 	}
 }

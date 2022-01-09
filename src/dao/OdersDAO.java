@@ -29,11 +29,8 @@ public class OdersDAO  extends BaseDAO{
 			CallableStatement stat = conn.prepareCall("{call orders_add(? ,?, ?)}");
 			stat.setInt(1, idNV);
 			stat.setString(2, ngayOrder);
-			 
 			stat.registerOutParameter(3, java.sql.Types.INTEGER);
 			stat.executeUpdate();
-			
-			
 			id = stat.getInt(3);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -95,26 +92,26 @@ public class OdersDAO  extends BaseDAO{
 		
 	}
 	
-	public void getOderByDate(LocalDate date, JTable tb) {
-		 String p_ngayOrder = date.toString();
-		 try {
-			 CallableStatement stat = conn.prepareCall("{call orders_getByDate(?)}");
-			 stat.setString(1, p_ngayOrder);
-			 ResultSet result = stat.executeQuery();
-			 DefaultTableModel tbModel = (DefaultTableModel)tb.getModel();
-			 if(result.next()) {
-				 do {
-					 int id = result.getInt(1);
-					 int idNV =result.getInt(2);
-					 LocalDate ngayOrder = LocalDate.parse(result.getString(3));
-					 tbModel.addRow(new Object[] {id, idNV,ngayOrder });	 
-				 }while(result.next());
-			 }
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+//	public void getOderByDate(LocalDate date, JTable tb) {
+//		 String p_ngayOrder = date.toString();
+//		 try {
+//			 CallableStatement stat = conn.prepareCall("{call orders_getByDate(?)}");
+//			 stat.setString(1, p_ngayOrder);
+//			 ResultSet result = stat.executeQuery();
+//			 DefaultTableModel tbModel = (DefaultTableModel)tb.getModel();
+//			 if(result.next()) {
+//				 do {
+//					 int id = result.getInt(1);
+//					 int idNV =result.getInt(2);
+//					 LocalDate ngayOrder = LocalDate.parse(result.getString(3));
+//					 tbModel.addRow(new Object[] {id, idNV,ngayOrder });	 
+//				 }while(result.next());
+//			 }
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 	
 	public void getOderByTime(LocalDate begin,LocalDate end, JTable tb) {
 		String begin_date = begin.toString();

@@ -14,6 +14,7 @@ import dto.UserName;
 import utilities.CoffeeDataSource;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import java.awt.Font;
@@ -65,13 +66,14 @@ public class Login extends JFrame {
 		CoffeeDataSource.init("database.properties");
 	    Connection conn = CoffeeDataSource.getConnection();
 	    UserNameDAO user_name_dao =  new UserNameDAO(conn);
-		setTitle("Cafe good ch�p");
+		setTitle("Cafe good chóp");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(450, 300, 447, 222);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		this.setLayout(null);
 		
 		JLabel user_label = new JLabel();
 		user_label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -103,13 +105,13 @@ public class Login extends JFrame {
 		btnThot.setBounds(304, 140, 78, 32);
 		contentPane.add(btnThot);
 		
-		ImageIcon iconLogo = new ImageIcon(new ImageIcon("images/logo.png").getImage().getScaledInstance(95, 80,20));		
+		ImageIcon iconLogo = new ImageIcon(new ImageIcon("images/logo (2).png").getImage().getScaledInstance(95, 80,20));		
 		lblLogo = new JLabel("");
 		lblLogo.setBounds(10, 0, 103, 82);
 		contentPane.add(lblLogo);
 		lblLogo.setIcon(iconLogo);
 		
-		lblNewLabel = new JLabel("Cafe Good Ch�p");
+		lblNewLabel = new JLabel("Cafe Good Chóp");
 		lblNewLabel.setForeground(new Color(139, 69, 19));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 34));
@@ -130,6 +132,8 @@ public class Login extends JFrame {
 					 try {
 						 Layout_form frame = new Layout_form(id);
 						frame.setVisible(true);
+						dispose();
+						
 					} catch (ClassNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -142,13 +146,11 @@ public class Login extends JFrame {
 					}
 				}
 				else {
-					try {
-						Login frameLogin = new Login();
-					} catch (ClassNotFoundException | IOException | SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}		
+					
+						JOptionPane.showMessageDialog(null,"Tên đăng nhập hoặc mật khẩu không đúng");
+					
+				}
+				
 			}
 		});
 	}

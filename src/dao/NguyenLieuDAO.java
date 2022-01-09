@@ -43,8 +43,7 @@ public class NguyenLieuDAO extends BaseDAO {
 		 String p_tenNL = up.getTenNL();
 		 int p_gia = up.getGia();
 		 double p_soLuong  = up.getSoLuong();
-		 String p_ngayNhapDate = up.getNgayNhap().toString();
-			 
+		 String p_ngayNhapDate = String.valueOf(up.getNgayNhap());
 		 try {
 			 CallableStatement stat= conn.prepareCall("{call nguyen_lieu_update(?, ? ,? , ? ,? )}");
 			 stat.setInt(1, p_id);
@@ -85,7 +84,32 @@ public class NguyenLieuDAO extends BaseDAO {
 					 int gia =result.getInt(3);
 					 int soLuong =result.getInt(4);
 					 LocalDate ngayNhap = LocalDate.parse(result.getString(5));
-					 tbModel.addRow(new Object[] {id, tenNL, gia ,soLuong , ngayNhap });	 
+					 int tong = gia*soLuong;
+					 tbModel.addRow(new Object[] {id, tenNL, ngayNhap, gia ,soLuong  , tong});	 
+				 }while(result.next());
+			 }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	public void Search(String ngay1, String ngay2, JTable tb) {
+		 try {
+			 CallableStatement stat = conn.prepareCall("{call nguyen_lieu_search( ? , ? )}");
+			 stat.setString(1, ngay1);
+			 stat.setString(2, ngay2);
+			 ResultSet result = stat.executeQuery();
+			 DefaultTableModel tbModel = (DefaultTableModel)tb.getModel();
+			 if(result.next()) {
+				 do {
+					 int id = result.getInt(1);
+					 String tenNL = result.getString(2);
+					 int gia =result.getInt(3);
+					 int soLuong =result.getInt(4);
+					 LocalDate ngayNhap = LocalDate.parse(result.getString(5));
+					 int tong = gia*soLuong;
+					 tbModel.addRow(new Object[] {id, tenNL, ngayNhap, gia ,soLuong  , tong});	 
 				 }while(result.next());
 			 }
 		} catch (SQLException e) {

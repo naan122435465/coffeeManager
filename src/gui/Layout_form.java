@@ -15,6 +15,7 @@ import javax.xml.crypto.Data;
 
 import dao.UserNameDAO;
 import dto.UserName;
+
 import utilities.CoffeeDataSource;
 
 import javax.swing.Action;
@@ -151,7 +152,20 @@ public class Layout_form extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				btnQL.getParent().remove(curJPanel );
 				btnQL.getParent().revalidate();
-				curJPanel = new GUI_ThongKe();
+			
+					try {
+						curJPanel = new GUI_ThongKe();
+					} catch (ClassNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				
 				btnQL.getParent().add(curJPanel);
 				btnQL.getParent().repaint();
 			}
@@ -167,7 +181,18 @@ public class Layout_form extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				btnQL.getParent().remove(curJPanel );
 				btnQL.getParent().revalidate();
-			//	curJPanel = new gui();
+				try {
+					curJPanel = new GUI_Kho_NVL();
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				btnQL.getParent().add(curJPanel);
 				btnQL.getParent().repaint();
 			}
@@ -207,6 +232,24 @@ public class Layout_form extends JFrame {
 		
 		ImageIcon iconDangXuat = new ImageIcon("images/Logout.png");
 		JButton btnDangXuat = new JButton("Đăng xuất");
+		btnDangXuat.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new Login();
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				dispose();
+				
+			}
+		});
 		btnDangXuat.setBounds(743, 23, 131, 23);
 		contentPane.add(btnDangXuat);
 		btnDangXuat.setIcon(iconDangXuat);

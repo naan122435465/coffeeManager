@@ -9,6 +9,22 @@ public class NguyenLieu {
 	private int gia;
 	private double soLuong;
 	private LocalDate ngayNhap;
+	public NguyenLieu(int id2, String tenNL2, int gia2, int so_luong, LocalDate ngay_nhap) {
+		// TODO Auto-generated constructor stub
+		this.id = id2;
+		this.tenNL = tenNL2;
+		this.gia =gia2;
+		this.soLuong =so_luong;
+		this.ngayNhap = ngay_nhap;
+		
+	}
+	public NguyenLieu(String tenNL2, int gia2, int so_luong, LocalDate ngay_nhap) {
+		// TODO Auto-generated constructor stub
+		this.tenNL = tenNL2;
+		this.gia =gia2;
+		this.soLuong =so_luong;
+		this.ngayNhap = ngay_nhap;
+	}
 	public int getId() {
 		return id;
 	}
